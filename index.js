@@ -20,6 +20,7 @@ async function run() {
         // console.log('connected to database');
         const database = client.db('travelDb');
         const servicesCollecion = database.collection('services');
+        const orderCollection = database.collection('orders');
 
         //Get API
         app.get('/services', async (req, res) => {
@@ -43,6 +44,14 @@ async function run() {
             // console.log('hit the post api', service);
             const result = await servicesCollecion.insertOne(service);
             console.log(result);
+            res.json(result);
+        })
+
+        //Add Orders API
+        app.post('/orders', async (req, res) => {
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
+            // console.log('order info', order);
             res.json(result);
         })
     }
